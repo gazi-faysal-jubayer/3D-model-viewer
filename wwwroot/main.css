@@ -29,7 +29,48 @@ html::-webkit-scrollbar {
     padding: 0 1em;
 }
 
+#header .logo {
+    height: 3.5em;
+    width: auto;
+    max-width: 8em;
+    object-fit: contain;
+    margin-right: 0.5em;
+}
+
+#header .title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #333;
+    white-space: nowrap;
+}
+
+/* Hide title on mobile devices */
+@media screen and (max-width: 768px) {
+    #header .title {
+        display: none;
+    }
+}
+
+#header #models, #header #upload {
+    background-color: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 0 0.5em;
+    height: 2em;
+    margin-right: 0.5em;
+    cursor: pointer;
+}
+
+#header #models:hover, #header #upload:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
 #preview, #overlay {
+    top: 4em;
+    bottom: 0;
     overflow-y: scroll;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* Internet Explorer 10+ */
@@ -38,6 +79,49 @@ html::-webkit-scrollbar {
 #preview::-webkit-scrollbar, 
 #overlay::-webkit-scrollbar {
     display: none; /* WebKit */
+}
+
+#overlay {
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 1em;
+    display: none;
+}
+
+#overlay > .notification {
+    margin: auto;
+    padding: 1em;
+    max-width: 50%;
+    background: white;
+}body, html {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    font-family: ArtifaktElement, sans-serif;
+    overflow: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+body::-webkit-scrollbar, 
+html::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+
+#header {
+    height: 4em;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: transparent;
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    padding: 0 1em;
 }
 
 #header .logo {
@@ -58,6 +142,13 @@ html::-webkit-scrollbar {
     white-space: nowrap;
 }
 
+/* Hide title on mobile devices */
+@media screen and (max-width: 768px) {
+    #header .title {
+        display: none;
+    }
+}
+
 #header #models, #header #upload {
     background-color: transparent;
     border: 1px solid rgba(0, 0, 0, 0.1);
@@ -75,6 +166,14 @@ html::-webkit-scrollbar {
 #preview, #overlay {
     top: 4em;
     bottom: 0;
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+#preview::-webkit-scrollbar, 
+#overlay::-webkit-scrollbar {
+    display: none; /* WebKit */
 }
 
 #overlay {
