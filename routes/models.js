@@ -12,7 +12,7 @@ router.get('/api/models', async function (req, res, next) {
             urn: urnify(o.objectId)
         })));
     } catch (err) {
-        next(err);
+        res.status(500).json({ error: err.message || 'Failed to fetch models' });
     }
 });
 
@@ -36,14 +36,14 @@ router.get('/api/models/:urn/status', async function (req, res, next) {
             res.json({ status: 'n/a' });
         }
     } catch (err) {
-        next(err);
+        res.status(500).json({ error: err.message || 'Failed to fetch model status' });
     }
 });
 
 router.post('/api/models', formidable({ maxFileSize: Infinity }), async function (req, res, next) {
     const file = req.files['model-file'];
     if (!file) {
-        res.status(400).send('The required field ("model-file") is missing.');
+        res.status(400).json({ error: 'The required field ("model-file") is missing.' });
         return;
     }
     try {
@@ -54,7 +54,7 @@ router.post('/api/models', formidable({ maxFileSize: Infinity }), async function
             urn: urnify(obj.objectId)
         });
     } catch (err) {
-        next(err);
+        res.status(500).json({ error: err.message || 'Failed to upload model' });
     }
 });
 

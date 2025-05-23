@@ -4,15 +4,22 @@ import { initViewer, loadModel } from '../viewer';
 function Portfolio() {
   const [models, setModels] = useState([]);
   const [selectedModel, setSelectedModel] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchModels = async () => {
       try {
         const response = await fetch('/api/models');
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to fetch models');
+        }
         const data = await response.json();
         setModels(data);
+        setError(null);
       } catch (error) {
         console.error('Error fetching models:', error);
+        setError(error.message);
       }
     };
 
@@ -48,14 +55,16 @@ function Portfolio() {
       });
 
       if (!response.ok) {
-        throw new Error(await response.text());
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to upload model');
       }
 
       const result = await response.json();
       setModels(prev => [...prev, result]);
+      setError(null);
     } catch (error) {
       console.error('Upload error:', error);
-      alert('Failed to upload model. Please try again.');
+      setError(error.message);
     }
   };
 
@@ -77,6 +86,12 @@ function Portfolio() {
           Upload Model
         </label>
       </div>
+
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          {error}
+        </div>
+      )}
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {models.map((model) => (
