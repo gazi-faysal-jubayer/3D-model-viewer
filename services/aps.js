@@ -29,10 +29,20 @@ service.ensureBucketExists = async (bucketKey) => {
     try {
         await ossClient.getBucketDetails(bucketKey, { accessToken });
     } catch (err) {
-        if (err.axiosError.response.status === 404) {
-            await ossClient.createBucket(Region.Us, { bucketKey: bucketKey, policyKey: PolicyKey.Persistent }, { accessToken});
+        if (err.axiosError?.response?.status === 404) {
+            try {
+                await ossClient.createBucket({
+                    bucketKey: bucketKey,
+                    policyKey: PolicyKey.Persistent,
+                    region: Region.Us
+                }, { accessToken });
+            } catch (createError) {
+                console.error('Failed to create bucket:', createError);
+                throw createError;
+            }
         } else {
-            throw err;  
+            console.error('Error checking bucket:', err);
+            throw err;
         }
     }
 };
