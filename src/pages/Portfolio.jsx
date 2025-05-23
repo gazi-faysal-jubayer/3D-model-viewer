@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { initViewer, loadModel } from '../viewer';
+import { initViewer, loadModel } from '../../wwwroot/viewer';
 
 function Portfolio() {
   const [models, setModels] = useState([]);
