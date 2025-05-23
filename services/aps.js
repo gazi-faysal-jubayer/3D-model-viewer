@@ -10,29 +10,18 @@ const modelDerivativeClient = new ModelDerivativeClient();
 const service = module.exports = {};
 
 async function getInternalToken() {
-    try {
-        const credentials = await authenticationClient.getTwoLeggedToken(APS_CLIENT_ID, APS_CLIENT_SECRET, [
-            Scopes.DataRead,
-            Scopes.DataCreate,
-            Scopes.DataWrite,
-            Scopes.BucketCreate,
-            Scopes.BucketRead
-        ]);
-        return credentials.access_token;
-    } catch (err) {
-        console.error('Error getting internal token:', err);
-        throw new Error('Failed to authenticate with Autodesk Platform Services');
-    }
+    const credentials = await authenticationClient.getTwoLeggedToken(APS_CLIENT_ID, APS_CLIENT_SECRET, [
+        Scopes.DataRead,
+        Scopes.DataCreate,
+        Scopes.DataWrite,
+        Scopes.BucketCreate,
+        Scopes.BucketRead
+    ]);
+    return credentials.access_token;
 }
 
 service.getViewerToken = async () => {
-    try {
-        const credentials = await authenticationClient.getTwoLeggedToken(APS_CLIENT_ID, APS_CLIENT_SECRET, [Scopes.ViewablesRead]);
-        return credentials;
-    } catch (err) {
-        console.error('Error getting viewer token:', err);
-        throw new Error('Failed to get viewer token');
-    }
+    return await authenticationClient.getTwoLeggedToken(APS_CLIENT_ID, APS_CLIENT_SECRET, [Scopes.ViewablesRead]);
 };
 
 service.ensureBucketExists = async (bucketKey) => {
@@ -61,54 +50,39 @@ service.ensureBucketExists = async (bucketKey) => {
 service.listObjects = async () => {
     await service.ensureBucketExists(APS_BUCKET);
     const accessToken = await getInternalToken();
-    try {
-        let resp = await ossClient.getObjects(APS_BUCKET, { limit: 64, accessToken });
-        let objects = resp.items;
-        while (resp.next) {
-            const startAt = new URL(resp.next).searchParams.get('startAt');
-            resp = await ossClient.getObjects(APS_BUCKET, { limit: 64, startAt, accessToken });
-            objects = objects.concat(resp.items);
-        }
-        return objects;
-    } catch (err) {
-        console.error('Error listing objects:', err);
-        throw new Error('Failed to list models');
+    let resp = await ossClient.getObjects(APS_BUCKET, { limit: 64, accessToken });
+    let objects = resp.items;
+    while (resp.next) {
+        const startAt = new URL(resp.next).searchParams.get('startAt');
+        resp = await ossClient.getObjects(APS_BUCKET, { limit: 64, startAt, accessToken });
+        objects = objects.concat(resp.items);
     }
+    return objects;
 };
 
 service.uploadObject = async (objectName, filePath) => {
     await service.ensureBucketExists(APS_BUCKET);
     const accessToken = await getInternalToken();
-    try {
-        const obj = await ossClient.uploadObject(APS_BUCKET, objectName, filePath, { accessToken });
-        return obj;
-    } catch (err) {
-        console.error('Error uploading object:', err);
-        throw new Error('Failed to upload model');
-    }
+    const obj = await ossClient.uploadObject(APS_BUCKET, objectName, filePath, { accessToken });
+    return obj;
 };
 
 service.translateObject = async (urn, rootFilename) => {
     const accessToken = await getInternalToken();
-    try {
-        const job = await modelDerivativeClient.startJob({
-            input: {
-                urn,
-                compressedUrn: !!rootFilename,
-                rootFilename
-            },
-            output: {
-                formats: [{
-                    views: [View._2d, View._3d],
-                    type: OutputType.Svf2
-                }]
-            }
-        }, { accessToken });
-        return job.result;
-    } catch (err) {
-        console.error('Error translating object:', err);
-        throw new Error('Failed to process model');
-    }
+    const job = await modelDerivativeClient.startJob({
+        input: {
+            urn,
+            compressedUrn: !!rootFilename,
+            rootFilename
+        },
+        output: {
+            formats: [{
+                views: [View._2d, View._3d],
+                type: OutputType.Svf2
+            }]
+        }
+    }, { accessToken });
+    return job.result;
 };
 
 service.getManifest = async (urn) => {
@@ -117,11 +91,10 @@ service.getManifest = async (urn) => {
         const manifest = await modelDerivativeClient.getManifest(urn, { accessToken });
         return manifest;
     } catch (err) {
-        if (err.axiosError?.response?.status === 404) {
+        if (err.axiosError.response.status === 404) {
             return null;
         } else {
-            console.error('Error getting manifest:', err);
-            throw new Error('Failed to get model status');
+            throw err;
         }
     }
 };
