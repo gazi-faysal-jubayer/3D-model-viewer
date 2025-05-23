@@ -6,29 +6,39 @@ function About() {
         <div>
           <h3 className="text-xl font-semibold mb-3">Professional Summary</h3>
           <p className="text-gray-700">
-            [Your professional summary here]
+            I am a passionate 3D artist and developer with extensive experience in creating immersive digital experiences. 
+            My expertise spans across 3D modeling, web development, and user interface design, allowing me to bring creative 
+            visions to life through technology.
           </p>
         </div>
         
         <div>
           <h3 className="text-xl font-semibold mb-3">Skills</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <div className="bg-gray-50 p-3 rounded">3D Modeling</div>
-            <div className="bg-gray-50 p-3 rounded">Animation</div>
-            <div className="bg-gray-50 p-3 rounded">Texturing</div>
-            <div className="bg-gray-50 p-3 rounded">Web Development</div>
-            <div className="bg-gray-50 p-3 rounded">UI/UX Design</div>
-            <div className="bg-gray-50 p-3 rounded">Project Management</div>
+            <div className="bg-gray-50 p-3 rounded hover:bg-gray-100 transition-colors">3D Modeling</div>
+            <div className="bg-gray-50 p-3 rounded hover:bg-gray-100 transition-colors">Animation</div>
+            <div className="bg-gray-50 p-3 rounded hover:bg-gray-100 transition-colors">Texturing</div>
+            <div className="bg-gray-50 p-3 rounded hover:bg-gray-100 transition-colors">Web Development</div>
+            <div className="bg-gray-50 p-3 rounded hover:bg-gray-100 transition-colors">UI/UX Design</div>
+            <div className="bg-gray-50 p-3 rounded hover:bg-gray-100 transition-colors">Project Management</div>
+            <div className="bg-gray-50 p-3 rounded hover:bg-gray-100 transition-colors">React</div>
+            <div className="bg-gray-50 p-3 rounded hover:bg-gray-100 transition-colors">Three.js</div>
+            <div className="bg-gray-50 p-3 rounded hover:bg-gray-100 transition-colors">AutoCAD</div>
           </div>
         </div>
 
         <div>
           <h3 className="text-xl font-semibold mb-3">Education</h3>
           <div className="space-y-4">
-            <div>
-              <h4 className="font-medium">Degree Name</h4>
-              <p className="text-gray-600">University Name</p>
-              <p className="text-gray-500">Graduation Year</p>
+            <div className="bg-gray-50 p-4 rounded">
+              <h4 className="font-medium">Bachelor of Architecture</h4>
+              <p className="text-gray-600">University of Engineering and Technology</p>
+              <p className="text-gray-500">2018 - 2022</p>
+            </div>
+            <div className="bg-gray-50 p-4 rounded">
+              <h4 className="font-medium">3D Visualization Certification</h4>
+              <p className="text-gray-600">Autodesk Certified Professional</p>
+              <p className="text-gray-500">2023</p>
             </div>
           </div>
         </div>

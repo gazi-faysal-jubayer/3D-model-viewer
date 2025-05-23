@@ -5,7 +5,7 @@ function Navbar() {
     <nav className="bg-white shadow-lg">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          <Link to="/" className="text-xl font-bold">Your Name</Link>
+          <Link to="/" className="text-xl font-bold">Gazi's Portfolio</Link>
           <div className="hidden md:flex space-x-8">
             <Link to="/" className="text-gray-700 hover:text-gray-900">Home</Link>
             <Link to="/portfolio" className="text-gray-700 hover:text-gray-900">Portfolio</Link>
