@@ -1,24 +1,33 @@
 {
-  "name": "aps-simple-viewer-nodejs",
+  "name": "3d-portfolio",
   "version": "1.0.0",
-  "description": "Autodesk Platform Services application built by following the Simple Viewer tutorial from https://aps.autodesk.com/tutorials.",
+  "description": "Professional portfolio website with 3D model viewer",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "keywords": [
-    "autodesk-platform-services"
-  ],
-  "license": "MIT",
   "dependencies": {
     "@aps_sdk/authentication": "^1.0.0",
     "@aps_sdk/model-derivative": "^1.0.0",
     "@aps_sdk/oss": "^1.0.1",
+    "@headlessui/react": "^1.7.18",
+    "@heroicons/react": "^2.1.1",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
-    "express-formidable": "^1.2.0"
+    "express-formidable": "^1.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.0",
+    "tailwindcss": "^3.4.1",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.35"
   },
   "devDependencies": {
-    "@types/forge-viewer": "^7.48.0"
+    "@types/forge-viewer": "^7.48.0",
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.0.8"
   }
 }
